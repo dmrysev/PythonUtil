@@ -1,6 +1,7 @@
 import os
 import re
 import subprocess
+from pathlib import Path
 from shutil import copy
 
 class cd:
@@ -71,3 +72,7 @@ def getDirPath(filepath):
     dirPath = os.path.split(filepath)[0]
 
     return dirPath
+
+def find_files_recursively(dir_path: str, file_name_pattern: str):
+    for path in Path(dir_path).rglob(file_name_pattern):
+        print(path)    
