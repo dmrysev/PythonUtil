@@ -37,4 +37,4 @@ def get_dir_path(filepath):
     
 def find_files_recursively(dir_path: str, file_name_pattern: str):
     for path in Path(dir_path).rglob(file_name_pattern):
-        print(path)    
+        yield path
