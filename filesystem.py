@@ -16,63 +16,25 @@ class cd:
     def __exit__(self, etype, value, traceback):
         os.chdir(self.savedPath)
 
-
-def listValueOrDefault(list, index, default = None):
-    return list[index] if len(list) > index else default
-
-
-def checkFileExistance(filepath):
-    if not os.path.exists(filepath):
-        msg = 'File not found: %s' % filepath
-        raise IOError(msg)
-
-
-def saveToFile(content, filepath):
+def write_to_file(content, filepath):
     with open(filepath, 'w') as f:
-        f.write(content)
+        f.write(content)        
 
-
-def execute(command):
-    p = subprocess.Popen(
-        command, universal_newlines=True, shell=True,
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    output, error = p.communicate()
-
-    if p.returncode != 0:
-        errorMsg = '%s %s' % (output, error)
-        e = subprocess.CalledProcessError(p.returncode, command)
-        e.message += errorMsg
-        raise e
-
-    return output
-
-
-def copyToDir(sourceFilepath, destinationDirpath):
+def copy_file_to_dir(sourceFilepath, destinationDirpath):
     filename = os.path.split(sourceFilepath)[1]
     destinationFilepath = os.path.join(destinationDirpath, filename)
     copy(sourceFilepath, destinationFilepath)
-
     return destinationFilepath
 
-
-def splitStringBySpacesRespectQuotes(string):
-    values = [t.strip('"') for t in re.findall(r'[^\s"]+|"[^"]*"', string)]
-
-    return values
-
-
-def getFileName(filepath):
+def get_file_name(filepath):
     filename = os.path.basename(filepath)
     filename = os.path.splitext(filename)[0]
-
     return filename
 
-
-def getDirPath(filepath):
+def get_dir_path(filepath):
     dirPath = os.path.split(filepath)[0]
-
     return dirPath
-
+    
 def find_files_recursively(dir_path: str, file_name_pattern: str):
     for path in Path(dir_path).rglob(file_name_pattern):
         print(path)    
